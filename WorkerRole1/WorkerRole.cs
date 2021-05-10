@@ -19,7 +19,7 @@ namespace WorkerRole1
     {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
-        //private IWebHost host;
+        private IWebHost host;
 
         public override void Run()
         {
@@ -62,14 +62,14 @@ namespace WorkerRole1
                 .UseUrls(urls)
                 .Build();*/
 
-                /*
+
                 var builder = WebHost.CreateDefaultBuilder(new string[0])
                 .UseStartup<Startup>();
 
                 host = builder.Build();
-                */
 
-                Program.Main(null);
+
+                //Program.Main(null);
 
             }
             catch(Exception exc)
