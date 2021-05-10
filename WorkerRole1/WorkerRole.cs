@@ -12,6 +12,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using AspNetCoreWebApi;
 using System.IO;
+using Microsoft.Extensions.Hosting;
 
 namespace WorkerRole1
 {
@@ -37,6 +38,12 @@ namespace WorkerRole1
 
         public override bool OnStart()
         {
+            OnStartAsync().GetAwaiter().GetResult();
+            return base.OnStart();
+        }
+
+        private async Task<bool> OnStartAsync()
+        {
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
 
@@ -55,19 +62,19 @@ namespace WorkerRole1
 
             try
             {
-                /*host = new WebHostBuilder()
-                //.UseContentRoot(Directory.GetCurrentDirectory())
+                host = new WebHostBuilder()
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
-                //.UseHttpSys()
+                .UseHttpSys()
                 .UseUrls(urls)
-                .Build();*/
+                .Build();
 
+                /*var builder = WebHost.CreateDefaultBuilder(new string[0])
+                .UseStartup<Startup>();*/
 
-                var builder = WebHost.CreateDefaultBuilder(new string[0])
-                .UseStartup<Startup>();
+                //host = builder.Build();
 
-                host = builder.Build();
-
+                await host.StartAsync();
 
                 //Program.Main(null);
 
@@ -78,10 +85,6 @@ namespace WorkerRole1
 
             }
 
-            /*
-            var host1 = WebHost.CreateDefaultBuilder(null)
-                .UseStartup<Startup>();
-            */
 
             //string baseUri = String.Format("{0}://{1}", endpoint.Protocol, endpoint.IPEndpoint);
 
