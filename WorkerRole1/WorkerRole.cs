@@ -69,14 +69,7 @@ namespace WorkerRole1
                 .UseUrls(urls)
                 .Build();
 
-                /*var builder = WebHost.CreateDefaultBuilder(new string[0])
-                .UseStartup<Startup>();*/
-
-                //host = builder.Build();
-
                 await host.StartAsync();
-
-                //Program.Main(null);
 
             }
             catch(Exception exc)
@@ -84,9 +77,6 @@ namespace WorkerRole1
                 Trace.TraceError(exc.Message);
 
             }
-
-
-            //string baseUri = String.Format("{0}://{1}", endpoint.Protocol, endpoint.IPEndpoint);
 
 
             bool result = base.OnStart();
